@@ -38,7 +38,7 @@ export default function SarcasmCard() {
 							color="pink"
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity>
+					<TouchableOpacity disabled={isFetching}>
 						<Ionicons
 							name="copy"
 							size={24}
