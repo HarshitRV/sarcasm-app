@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useGetRandomSarcasmQuery } from '@/app/services/sarcasm/sarcasm.service';
+import { useGetRandomSarcasmQuery } from '@/services/sarcasm/sarcasm.service';
 
 import styles from './styles';
 

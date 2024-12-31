@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		color: '#fff',
 	},
-	copy: {},
 	card: {
 		width: '100%',
 		borderWidth: 1,

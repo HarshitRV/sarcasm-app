@@ -1,6 +1,6 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Sarcasm } from './types'
+import { Sarcasm, SarcasticComment } from './types'
 
 export const sarcasmApi = createApi({
     reducerPath: 'sarcasmApi',
@@ -9,7 +9,10 @@ export const sarcasmApi = createApi({
         getRandomSarcasm: builder.query<Sarcasm, void>({
             query: () => '/',
         }),
+        getAllSarcasm: builder.query<SarcasticComment[], void>({
+            query: () => '/sarcasm/all'
+        })
     }),
 })
 
-export const { useGetRandomSarcasmQuery } = sarcasmApi
+export const { useGetRandomSarcasmQuery, useGetAllSarcasmQuery } = sarcasmApi
