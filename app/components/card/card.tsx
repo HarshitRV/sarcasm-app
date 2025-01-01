@@ -1,5 +1,6 @@
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 import styles from './styles';
+import * as Animatable from 'react-native-animatable';
 
 interface CardProps {
 	comment: string;
@@ -7,8 +8,10 @@ interface CardProps {
 
 export default function Card({ comment }: CardProps) {
 	return (
-		<View style={styles.container}>
+		<Animatable.View
+			animation={'fadeInDown'}
+			style={styles.container}>
 			<Text style={styles.text}>{comment}</Text>
-		</View>
+		</Animatable.View>
 	);
 }

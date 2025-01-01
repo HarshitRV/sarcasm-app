@@ -1,0 +1,1 @@
+export const REFETCH_INTERVAL = 30000;

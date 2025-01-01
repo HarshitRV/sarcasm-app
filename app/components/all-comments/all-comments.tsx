@@ -4,7 +4,7 @@ import { useGetAllSarcasmQuery } from '@/services/sarcasm/sarcasm.service';
 import errorAlert from '../utils';
 import styles from './styles';
 import SearchInput from '../search-input/search-input';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export default function AllComments() {
 	let { data, refetch, isFetching, error } = useGetAllSarcasmQuery();

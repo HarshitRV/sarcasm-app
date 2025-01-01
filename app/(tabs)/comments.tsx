@@ -1,4 +1,4 @@
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AllComments from '../components/all-comments/all-comments';
 

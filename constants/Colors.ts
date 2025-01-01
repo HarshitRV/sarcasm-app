@@ -23,4 +23,8 @@ export const Colors = {
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
   },
-};
+  neon: {
+    pink: '#FF10F0',
+    green: '#00FF00',
+  }
+} as const;
