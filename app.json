@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.harshitrv.sarcasmapp"
     },
     "web": {
       "bundler": "metro",
@@ -44,6 +45,7 @@
       "eas": {
         "projectId": "906f80b1-eab6-486e-a76f-d1294eb5f760"
       }
-    }
+    },
+    "owner": "harshitrv"
   }
 }
