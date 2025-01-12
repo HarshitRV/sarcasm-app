@@ -4,10 +4,10 @@ import { Sarcasm, SarcasticComment } from './types'
 
 export const sarcasmApi = createApi({
     reducerPath: 'sarcasmApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://sarcasmapi.onrender.com' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://sarcasmapi.onrender.com/api/v1' }),
     endpoints: (builder) => ({
         getRandomSarcasm: builder.query<Sarcasm, void>({
-            query: () => '/',
+            query: () => '/sarcasm/random',
         }),
         getAllSarcasm: builder.query<SarcasticComment[], void>({
             query: () => '/sarcasm/all'
