@@ -6,7 +6,8 @@ import styles from './styles';
 import SearchInput from '../search-input/search-input';
 import { useState } from 'react';
 
-export default function AllComments() {
+
+export default function AllSarcasms() {
 	let { data, refetch, isFetching, error } = useGetAllSarcasmQuery();
 
 	const [search, setSearch] = useState('');

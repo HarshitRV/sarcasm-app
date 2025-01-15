@@ -20,9 +20,9 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name="comments"
+				name="sarcasms"
 				options={{
-					title: 'All Comments',
+					title: 'All Sarcasms',
 					headerShown: false,
 					tabBarIcon: ({ color, focused }) => {
 						if (focused) {
@@ -42,6 +42,20 @@ export default function TabLayout() {
 							/>
 						);
 					},
+				}}
+			/>
+			<Tabs.Screen
+				name="add-sarcasm"
+				options={{
+					title: 'Add Sarcasm',
+					headerShown: false,
+					tabBarIcon: ({ color, focused }) => (
+						<Ionicons
+							name={focused ? 'add-circle' : 'add-circle-outline'}
+							color={color}
+							size={24}
+						/>
+					),
 				}}
 			/>
 		</Tabs>
