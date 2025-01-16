@@ -40,3 +40,8 @@ export const SARCASM_ROUTE = {
     GET_ALL: '/sarcasm/all',
     GET_RANDOM: '/sarcasm/random',
 } as const;
+
+export const ERROR_CODES = {
+    AUTH_TOKEN_EXPIRED: 'auth.token.expired',
+    DUPLICATE_SARCASM: 'duplicate.sarcasm',
+} as const;

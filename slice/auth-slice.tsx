@@ -1,4 +1,4 @@
-import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface AuthState {
 	isAuthenticated: boolean;

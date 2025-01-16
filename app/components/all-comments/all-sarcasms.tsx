@@ -1,11 +1,10 @@
-import { FlatList, RefreshControl, Text, TextInput, View } from 'react-native';
+import { FlatList, RefreshControl, Text, View } from 'react-native';
 import Card from '../card/card';
 import { useGetAllSarcasmQuery } from '@/services/sarcasm/sarcasm.service';
 import errorAlert from '../utils';
 import styles from './styles';
 import SearchInput from '../search-input/search-input';
 import { useState } from 'react';
-
 
 export default function AllSarcasms() {
 	let { data, refetch, isFetching, error } = useGetAllSarcasmQuery();

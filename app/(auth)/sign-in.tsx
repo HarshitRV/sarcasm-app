@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
 	TextInput,
 	TouchableOpacity,
@@ -8,10 +9,67 @@ import {
 	TouchableWithoutFeedback,
 	Platform,
 	Keyboard,
+	Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useLoginMutation } from '@/services/sarcasm/sarcasm.service';
+import { UserAuthRequestBody } from '@/services/sarcasm/types';
+import * as SecureStore from 'expo-secure-store';
+import { useAppDispatch } from '@/store/hooks';
+import { login } from '@/slice/auth-slice';
+import { router } from 'expo-router';
 
 export default function SignIn() {
+	const dispatch = useAppDispatch();
+	const [loginCredentials, setLoginCredentials] = useState<UserAuthRequestBody>(
+		{
+			email: '',
+			password: '',
+		}
+	);
+
+	const isLoginDisabled = !loginCredentials.email || !loginCredentials.password;
+
+	const [loginUser] = useLoginMutation();
+
+	const handleInputEmail = (text: string) => {
+		setLoginCredentials((prevState) => {
+			return {
+				...prevState,
+				email: text,
+			};
+		});
+	};
+
+	const handleInputPassword = (text: string) => {
+		setLoginCredentials((prevState) => {
+			return {
+				...prevState,
+				password: text,
+			};
+		});
+	};
+
+	const handleLogin = async () => {
+		try {
+			if (!loginCredentials.email || !loginCredentials.password) {
+				alert('Please enter your email and password');
+				return;
+			}
+
+			const { authToken } = await loginUser(loginCredentials).unwrap();
+
+			if (authToken) {
+				await SecureStore.setItemAsync('authToken', authToken);
+				dispatch(login());
+				router.replace('/add-sarcasm');
+			}
+		} catch (e) {
+			console.log(e);
+			Alert.alert('Error', 'Invalid credentials');
+		}
+	};
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<KeyboardAvoidingView
@@ -23,17 +81,21 @@ export default function SignIn() {
 							style={styles.input}
 							placeholder="Enter your email"
 							placeholderTextColor={'#fff'}
+							keyboardType="email-address"
+							onChangeText={handleInputEmail}
 						/>
 						<TextInput
 							style={styles.input}
 							placeholder="Enter your password"
 							placeholderTextColor={'#fff'}
 							secureTextEntry={true}
+							onChangeText={handleInputPassword}
 						/>
 						<TouchableOpacity
 							activeOpacity={0.7}
 							style={styles.submitButton}
-							onPress={() => {}}>
+							onPress={handleLogin}
+							disabled={isLoginDisabled}>
 							<Text style={styles.submitButtonText}>Login</Text>
 						</TouchableOpacity>
 					</View>

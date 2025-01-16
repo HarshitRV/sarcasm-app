@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     text: {
@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     header: {
         marginBottom: 10,
         color: '#fff',
-    }
+    },
 });
 
 export default styles;

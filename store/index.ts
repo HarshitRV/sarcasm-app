@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { sarcasmApi } from '../services/sarcasm/sarcasm.service'
-import { setupListeners } from '@reduxjs/toolkit/query'
-import authSlice from '@/slice/auth-slice'
+import { configureStore } from '@reduxjs/toolkit';
+import { sarcasmApi } from '../services/sarcasm/sarcasm.service';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import authSlice from '@/slice/auth-slice';
 
 export const store = configureStore({
     reducer: {
@@ -9,12 +9,12 @@ export const store = configureStore({
         [authSlice.reducerPath]: authSlice.reducer,
     },
 
-    middleware: (getDefaultMiddleware) =>
+    middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(sarcasmApi.middleware),
-})
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
-export type AppStore = typeof store
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export type AppStore = typeof store;
 
-setupListeners(store.dispatch)
+setupListeners(store.dispatch);
