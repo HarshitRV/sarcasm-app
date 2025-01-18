@@ -5,26 +5,41 @@
 
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
+const colors = {
+    purple: '#7c3aed',
+};
 
 export const Colors = {
     light: {
         text: '#11181C',
+        placeHolderText: '#687076',
         background: '#fff',
         tint: tintColorLight,
         icon: '#687076',
         tabIconDefault: '#687076',
         tabIconSelected: tintColorLight,
+        defaultBorderColor: '#000',
+        buttonBackground: '#fff',
     },
     dark: {
         text: '#ECEDEE',
-        background: '#151718',
+        placeHolderText: '#9BA1A6',
+        background: '#09090b',
         tint: tintColorDark,
         icon: '#9BA1A6',
         tabIconDefault: '#9BA1A6',
         tabIconSelected: tintColorDark,
+        defaultBorderColor: '#fff',
+        buttonBackground: colors.purple,
     },
     neon: {
         pink: '#FF10F0',
         green: '#00FF00',
+    },
+    focus: {
+        purple: colors.purple,
+    },
+    primary: {
+        purple: colors.purple,
     },
 } as const;
