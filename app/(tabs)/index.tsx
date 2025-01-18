@@ -1,4 +1,4 @@
-import { Image, StyleSheet, ImageBackground, View } from 'react-native';
+import { StyleSheet, ImageBackground, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SarcasmCard from '../components/sarcasm-card/sarcasm-card';
 

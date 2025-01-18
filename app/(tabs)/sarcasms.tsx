@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AllComments from '../components/all-comments/all-comments';
+import AllSarcasms from '../components/all-comments/all-sarcasms';
 
-export default function Comments() {
+export default function Sarcasms() {
 	return (
 		<SafeAreaView style={styles.container}>
-			<AllComments />
+			<AllSarcasms />
 		</SafeAreaView>
 	);
 }

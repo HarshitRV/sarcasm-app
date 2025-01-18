@@ -1,4 +1,4 @@
-import { FlatList, RefreshControl, Text, TextInput, View } from 'react-native';
+import { FlatList, RefreshControl, Text, View } from 'react-native';
 import Card from '../card/card';
 import { useGetAllSarcasmQuery } from '@/services/sarcasm/sarcasm.service';
 import errorAlert from '../utils';
@@ -6,7 +6,7 @@ import styles from './styles';
 import SearchInput from '../search-input/search-input';
 import { useState } from 'react';
 
-export default function AllComments() {
+export default function AllSarcasms() {
 	let { data, refetch, isFetching, error } = useGetAllSarcasmQuery();
 
 	const [search, setSearch] = useState('');
@@ -26,7 +26,7 @@ export default function AllComments() {
 	}
 
 	return (
-		<View>
+		<View style={styles.container}>
 			<View style={styles.header}>
 				<Text style={styles.text}>All Sarcastic Comments</Text>
 				<SearchInput
@@ -38,7 +38,7 @@ export default function AllComments() {
 			<FlatList
 				keyboardShouldPersistTaps="handled"
 				keyboardDismissMode="none"
-				data={data ? data : []}
+				data={data ? data.reverse() : []}
 				keyExtractor={(comment) => comment._id}
 				renderItem={({ item }) => <Card comment={item.sarcasm} />}
 				refreshControl={

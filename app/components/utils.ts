@@ -1,8 +1,6 @@
-import { Alert } from "react-native";
+import { Alert } from 'react-native';
 
-export default async function errorAlert(
-    error: unknown,
-) {
+export default async function errorAlert(error: unknown) {
     if (error instanceof Response) {
         const { message } = await error.json();
         Alert.alert(message);
@@ -11,4 +9,4 @@ export default async function errorAlert(
     }
 
     Alert.alert('Something went wrong!');
-};
+}
