@@ -26,7 +26,7 @@ export default function AllSarcasms() {
 	}
 
 	return (
-		<View>
+		<View style={styles.container}>
 			<View style={styles.header}>
 				<Text style={styles.text}>All Sarcastic Comments</Text>
 				<SearchInput
@@ -38,7 +38,7 @@ export default function AllSarcasms() {
 			<FlatList
 				keyboardShouldPersistTaps="handled"
 				keyboardDismissMode="none"
-				data={data ? data : []}
+				data={data ? data.reverse() : []}
 				keyExtractor={(comment) => comment._id}
 				renderItem={({ item }) => <Card comment={item.sarcasm} />}
 				refreshControl={
