@@ -48,10 +48,10 @@ export const sarcasmApi = createApi({
             providesTags: ['SarcasticComments'],
         }),
         addSarcasticComment: builder.mutation<Sarcasm, AddSarcasmRequestBody>({
-            query: ({ sarcasm }) => ({
+            query: ({ sarcasm, override }) => ({
                 url: USER_ROUTE.ADD_SARCASM,
                 method: 'POST',
-                body: { sarcasm },
+                body: { sarcasm, override },
             }),
             invalidatesTags: (_, error) => (error ? [] : ['SarcasticComments']),
         }),

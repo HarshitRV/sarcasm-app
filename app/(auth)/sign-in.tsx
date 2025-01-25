@@ -14,10 +14,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLoginMutation } from '@/services/sarcasm/sarcasm.service';
 import { UserAuthRequestBody } from '@/services/sarcasm/types';
-import * as SecureStore from 'expo-secure-store';
 import { useAppDispatch } from '@/store/hooks';
 import { login } from '@/slice/auth-slice';
 import { router } from 'expo-router';
+import { setAuthToken } from '@/utils/utils';
 
 export default function SignIn() {
 	const dispatch = useAppDispatch();
@@ -60,7 +60,7 @@ export default function SignIn() {
 			const { authToken } = await loginUser(loginCredentials).unwrap();
 
 			if (authToken) {
-				await SecureStore.setItemAsync('authToken', authToken);
+				await setAuthToken(authToken);
 				dispatch(login());
 				router.replace('/add-sarcasm');
 			}
