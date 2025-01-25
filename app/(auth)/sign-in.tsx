@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-	TextInput,
-	TouchableOpacity,
-	View,
-	Text,
-	StyleSheet,
-	KeyboardAvoidingView,
-	TouchableWithoutFeedback,
-	Platform,
-	Keyboard,
-	Alert,
+    TextInput,
+    TouchableOpacity,
+    View,
+    Text,
+    StyleSheet,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Platform,
+    Keyboard,
+    Alert,
+    useColorScheme,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLoginMutation } from '@/services/sarcasm/sarcasm.service';
@@ -18,125 +19,198 @@ import { useAppDispatch } from '@/store/hooks';
 import { login } from '@/slice/auth-slice';
 import { router } from 'expo-router';
 import { setAuthToken } from '@/utils/utils';
+import { Colors } from '@/constants/Colors';
 
 export default function SignIn() {
-	const dispatch = useAppDispatch();
-	const [loginCredentials, setLoginCredentials] = useState<UserAuthRequestBody>(
-		{
-			email: '',
-			password: '',
-		}
-	);
+    const colorScheme = useColorScheme();
+    const dispatch = useAppDispatch();
+    const [loginCredentials, setLoginCredentials] =
+        useState<UserAuthRequestBody>({
+            email: '',
+            password: '',
+        });
+    const [borderStyles, setBorderStyles] = useState<{
+        color: string;
+        width: number;
+    }>({
+        color:
+            colorScheme === 'dark'
+                ? Colors.dark.defaultBorderColor
+                : Colors.light.defaultBorderColor,
+        width: 1,
+    });
 
-	const isLoginDisabled = !loginCredentials.email || !loginCredentials.password;
+    const inputStyles = [
+        styles.input,
+        colorScheme === 'dark' ? styles.inputDark : styles.inputLight,
+        { borderColor: borderStyles.color, borderWidth: borderStyles.width },
+    ];
 
-	const [loginUser] = useLoginMutation();
+    const isLoginDisabled =
+        !loginCredentials.email || !loginCredentials.password;
 
-	const handleInputEmail = (text: string) => {
-		setLoginCredentials((prevState) => {
-			return {
-				...prevState,
-				email: text,
-			};
-		});
-	};
+    const [loginUser] = useLoginMutation();
 
-	const handleInputPassword = (text: string) => {
-		setLoginCredentials((prevState) => {
-			return {
-				...prevState,
-				password: text,
-			};
-		});
-	};
+    const textStyles = [
+        styles.text,
+        colorScheme === 'dark'
+            ? { color: Colors.dark.text }
+            : { color: Colors.light.text },
+    ];
 
-	const handleLogin = async () => {
-		try {
-			if (!loginCredentials.email || !loginCredentials.password) {
-				alert('Please enter your email and password');
-				return;
-			}
+    const getPlaceHolderTextColor = () => {
+        return colorScheme === 'dark'
+            ? Colors.dark.placeHolderText
+            : Colors.light.placeHolderText;
+    };
 
-			const { authToken } = await loginUser(loginCredentials).unwrap();
+    const handleInputEmail = (text: string) => {
+        setLoginCredentials(prevState => {
+            return {
+                ...prevState,
+                email: text,
+            };
+        });
+    };
 
-			if (authToken) {
-				await setAuthToken(authToken);
-				dispatch(login());
-				router.replace('/add-sarcasm');
-			}
-		} catch (e) {
-			console.log(e);
-			Alert.alert('Error', 'Invalid credentials');
-		}
-	};
+    const handleInputPassword = (text: string) => {
+        setLoginCredentials(prevState => {
+            return {
+                ...prevState,
+                password: text,
+            };
+        });
+    };
 
-	return (
-		<SafeAreaView style={styles.container}>
-			<KeyboardAvoidingView
-				style={styles.container}
-				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-					<View style={styles.formContainer}>
-						<TextInput
-							style={styles.input}
-							placeholder="Enter your email"
-							placeholderTextColor={'#fff'}
-							keyboardType="email-address"
-							onChangeText={handleInputEmail}
-						/>
-						<TextInput
-							style={styles.input}
-							placeholder="Enter your password"
-							placeholderTextColor={'#fff'}
-							secureTextEntry={true}
-							onChangeText={handleInputPassword}
-						/>
-						<TouchableOpacity
-							activeOpacity={0.7}
-							style={styles.submitButton}
-							onPress={handleLogin}
-							disabled={isLoginDisabled}>
-							<Text style={styles.submitButtonText}>Login</Text>
-						</TouchableOpacity>
-					</View>
-				</TouchableWithoutFeedback>
-			</KeyboardAvoidingView>
-		</SafeAreaView>
-	);
+    const handleLogin = async () => {
+        try {
+            if (!loginCredentials.email || !loginCredentials.password) {
+                alert('Please enter your email and password');
+                return;
+            }
+
+            const { authToken } = await loginUser(loginCredentials).unwrap();
+
+            if (authToken) {
+                await setAuthToken(authToken);
+                dispatch(login());
+                router.replace('/add-sarcasm');
+            }
+        } catch (e) {
+            console.log(e);
+            Alert.alert('Error', 'Invalid credentials');
+        }
+    };
+
+    const handleNavigateHome = () => {
+        router.replace('/');
+    };
+
+    useEffect(() => {
+        setBorderStyles({
+            color:
+                colorScheme === 'dark'
+                    ? Colors.dark.defaultBorderColor
+                    : Colors.light.defaultBorderColor,
+            width: 1,
+        });
+    }, [colorScheme]);
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <View>
+                <Text style={textStyles}>Sign In * Only for Admins</Text>
+            </View>
+            <KeyboardAvoidingView
+                style={styles.container}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.formContainer}>
+                        <TextInput
+                            style={inputStyles}
+                            placeholder="Enter your email"
+                            placeholderTextColor={getPlaceHolderTextColor()}
+                            keyboardType="email-address"
+                            onChangeText={handleInputEmail}
+                        />
+                        <TextInput
+                            style={inputStyles}
+                            placeholder="Enter your password"
+                            placeholderTextColor={getPlaceHolderTextColor()}
+                            secureTextEntry={true}
+                            onChangeText={handleInputPassword}
+                        />
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            style={styles.submitButton}
+                            onPress={handleLogin}
+                            disabled={isLoginDisabled}
+                        >
+                            <Text style={styles.submitButtonText}>Login</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            style={styles.submitButton}
+                            onPress={handleNavigateHome}
+                        >
+                            <Text style={styles.submitButtonText}>
+                                Back to Home
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: 5,
-		width: '100%',
-	},
-	formContainer: {
-		gap: 10,
-		width: '100%',
-	},
-	input: {
-		color: '#fff',
-		fontSize: 20,
-		fontFamily: 'SpaceMono',
-		borderWidth: 1,
-		borderColor: '#fff',
-		padding: 10,
-		width: '100%',
-		borderRadius: 10,
-	},
-	submitButton: {
-		backgroundColor: '#fff',
-		padding: 10,
-		borderRadius: 10,
-		alignItems: 'center',
-		width: '100%',
-	},
-	submitButtonText: {
-		color: '#000',
-		fontSize: 18,
-		fontFamily: 'SpaceMono',
-	},
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 5,
+        width: '100%',
+    },
+    containerHeader: {
+        color: '#fff',
+        fontSize: 20,
+        fontFamily: 'SpaceMono',
+    },
+    formContainer: {
+        gap: 10,
+        width: '100%',
+    },
+    input: {
+        fontSize: 20,
+        fontFamily: 'SpaceMono',
+        borderWidth: 1,
+        padding: 10,
+        width: '100%',
+        borderRadius: 10,
+    },
+    inputDark: {
+        color: Colors.dark.text,
+        borderColor: '#fff',
+    },
+    inputLight: {
+        color: Colors.light.text,
+    },
+    submitButton: {
+        backgroundColor: Colors.primary.purple,
+        padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        width: '100%',
+    },
+    submitButtonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontFamily: 'SpaceMono',
+    },
+    text: {
+        textAlign: 'justify',
+        fontFamily: 'SpaceMono',
+    },
 });
