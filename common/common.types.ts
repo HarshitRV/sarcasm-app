@@ -11,6 +11,7 @@ export const ERROR_CODES = {
     NOT_FOUND: 'not.found',
     INTERNAL_SERVER_ERROR: 'internal.server.error',
     MISSING_REQUIRED_ROLE: 'missing.required.role',
+    DUPLICATE_KEY: 11000,
 
     // Default error code
     UNKNOWN_ERROR: 'unknown.error',

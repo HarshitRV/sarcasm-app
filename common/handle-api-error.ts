@@ -23,7 +23,17 @@ export async function handleApiError(error: unknown) {
             break;
         }
         case 'duplicate.sarcasm': {
-            Alert.alert('Error', 'This comment already exists');
+            Alert.alert(
+                'Error',
+                'A similar comment already exists. Maybe try with override.',
+            );
+            break;
+        }
+        case 11000: {
+            Alert.alert(
+                'Error',
+                'Exactly the same comment already exists. Cannot override.',
+            );
             break;
         }
         default: {

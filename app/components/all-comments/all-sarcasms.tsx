@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     FlatList,
     RefreshControl,
@@ -16,15 +17,10 @@ import { handleApiError } from '@/common/handle-api-error';
 export default function AllSarcasms() {
     const colorScheme = useColorScheme();
 
-	const textStyles = [
-		styles.text,
-		colorScheme === 'dark' ? styles.textDark : styles.textLight,
-	];
-
-	// const headerStyles = [
-	// 	styles.header,
-	// 	colorScheme === 'dark' ? styles.containerDark : styles.containerLight,
-	// ]
+    const textStyles = [
+        styles.text,
+        colorScheme === 'dark' ? styles.textDark : styles.textLight,
+    ];
 
     let { data, refetch, isFetching, error } = useGetAllSarcasmQuery();
 

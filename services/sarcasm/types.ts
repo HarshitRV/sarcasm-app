@@ -12,6 +12,7 @@ export interface ErrorResponse {
 
 export interface AddSarcasmRequestBody {
     sarcasm: string;
+    override?: boolean;
 }
 
 export interface UserAuthRequestBody {

@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     Alert,
     useColorScheme,
+    Switch,
 } from 'react-native';
 import AuthGuard from '../components/auth-guard/auth-guard';
 import { useEffect, useState } from 'react';
@@ -29,6 +30,7 @@ export default function AddSarcasm() {
         width: 1,
     });
     const [sarcasticComment, setSarcasticComment] = useState('');
+    const [override, setOverride] = useState(false);
     const [addSarcasm, { isLoading }] = useAddSarcasticCommentMutation();
 
     const headerStyles = [
@@ -40,6 +42,13 @@ export default function AddSarcasm() {
         styles.input,
         colorScheme === 'dark' ? styles.inputDark : styles.inputLight,
         { borderColor: borderStyles.color, borderWidth: borderStyles.width },
+    ];
+
+    const textStyles = [
+        styles.text,
+        colorScheme === 'dark'
+            ? { color: Colors.dark.text }
+            : { color: Colors.light.text },
     ];
 
     const getBorderFocusColor = () => {
@@ -56,6 +65,10 @@ export default function AddSarcasm() {
         setSarcasticComment(text);
     };
 
+    const toggleSwitch = () => {
+        setOverride(prevState => !prevState);
+    };
+
     const handleSubmit = async () => {
         try {
             if (!sarcasticComment) {
@@ -64,6 +77,7 @@ export default function AddSarcasm() {
 
             const result = await addSarcasm({
                 sarcasm: sarcasticComment,
+                override,
             }).unwrap();
 
             if (result) {
@@ -114,6 +128,15 @@ export default function AddSarcasm() {
                             })
                         }
                     />
+                    <View style={styles.switchContainer}>
+                        <Switch 
+                            onValueChange={toggleSwitch}
+                            value={override}
+                        />
+                        <Text style={textStyles}>
+                            Override similarity check
+                        </Text>
+                    </View>
                     <TouchableOpacity
                         activeOpacity={0.7}
                         style={styles.submitButton}
@@ -152,6 +175,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
+        gap: 10,
     },
     inputDark: {
         color: Colors.dark.text,
@@ -159,6 +183,13 @@ const styles = StyleSheet.create({
     },
     inputLight: {
         color: Colors.light.text,
+    },
+    switchContainer: {
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 10,
     },
     input: {
         fontSize: 20,
@@ -174,12 +205,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         width: '100%',
-        marginTop: 20,
         backgroundColor: Colors.primary.purple,
     },
     submitButtonText: {
         fontSize: 18,
         fontFamily: 'SpaceMono',
         color: '#fff',
+    },
+    text: {
+        textAlign: 'justify',
+        fontFamily: 'SpaceMono',
     },
 });
