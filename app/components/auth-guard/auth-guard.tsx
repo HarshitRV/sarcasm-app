@@ -6,7 +6,7 @@ export default function AuthGuard({ children }: PropsWithChildren<{}>) {
 	useEffect(() => {
 		(async () => {
 			const authToken = await getAuthToken();
-			if (authToken) {
+			if (!authToken) {
 				router.replace('/sign-in');
 			}
 		})();
