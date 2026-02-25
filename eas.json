@@ -1,0 +1,38 @@
+{
+    "cli": {
+        "version": ">= 14.2.0",
+        "appVersionSource": "remote"
+    },
+    "build": {
+        "development": {
+            "extends": "production",
+            "developmentClient": true,
+            "distribution": "internal",
+            "ios": {
+                "simulator": true
+            }
+        },
+        "preview": {
+            "extends": "production",
+            "distribution": "internal"
+        },
+        "production": {
+            "autoIncrement": true,
+            "node": "22.9.0",
+            "android": {
+                "resourceClass": "medium"
+            },
+            "ios": {
+                "resourceClass": "medium"
+            }
+        }
+    },
+    "submit": {
+        "production": {
+            "android": {
+                "serviceAccountKeyPath": "./env/sarcasm-app-446507-d9f714e88f30.json",
+                "track": "internal"
+            }
+        }
+    }
+}
